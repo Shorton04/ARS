@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
-                // FIX: You need to store_result() before num_rows()
+                // Store result
                 mysqli_stmt_store_result($stmt);
                 
                 // Check if username exists, if yes then verify password
@@ -87,46 +87,74 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Cooperative AR System</title>
+    <title>Login - Cooperative Accounts Receivable System</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../assets/css/style.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
+<body class="bg-light">
+    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">Login</h4>
+            <div class="col-md-5">
+                <div class="text-center mt-5 mb-4">
+                    <h2 class="fw-bold text-primary">Cooperative Accounts Receivable System</h2>
+                    <p class="text-muted">Enter your credentials to access your account</p>
+                </div>
+                
+                <div class="card login-card shadow">
+                    <div class="card-header text-white">
+                        <h4 class="mb-0"><i class="bi bi-shield-lock me-2"></i>Login</h4>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-4">
                         <?php 
                         if(!empty($login_err)){
-                            echo '<div class="alert alert-danger">' . $login_err . '</div>';
+                            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>' . $login_err . '
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>';
                         }        
                         ?>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label for="username" class="form-label">Username</label>
-                                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-                                <span class="invalid-feedback"><?php echo $username_err; ?></span>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>" placeholder="Enter your username">
+                                    <div class="invalid-feedback"><?php echo $username_err; ?></div>
+                                </div>
                             </div>    
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                                <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                    <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" placeholder="Enter your password">
+                                    <div class="invalid-feedback"><?php echo $password_err; ?></div>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                                </button>
                             </div>
                         </form>
                     </div>
+                </div>
+                
+                <div class="text-center mt-4 text-muted">
+                    <p>&copy; <?php echo date('Y'); ?> Multipurpose Cooperative</p>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- jQuery and Bootstrap JS -->
+    <!-- Bootstrap Bundle with Popper -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
