@@ -2,6 +2,9 @@
 // Start session
 session_start();
 
+// Define the base URL for the project - change this to match your setup
+$base_url = "/accounts_receivable_system"; // Use underscore to match your URL format
+
 // Check if user is logged in
 $is_logged_in = isset($_SESSION['user_id']);
 $is_admin = isset($_SESSION['role']) && $_SESSION['role'] == 'admin';
@@ -9,7 +12,7 @@ $is_member = isset($_SESSION['role']) && $_SESSION['role'] == 'member';
 
 // Redirect to login page if not logged in
 if (!$is_logged_in && basename($_SERVER['PHP_SELF']) != 'login.php') {
-    header("location: ../auth/login.php");
+    header("location: {$base_url}/auth/login.php");
     exit;
 }
 ?>
@@ -28,12 +31,12 @@ if (!$is_logged_in && basename($_SERVER['PHP_SELF']) != 'login.php') {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="<?php echo $base_url; ?>/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="../index.php">
+            <a class="navbar-brand" href="<?php echo $base_url; ?>/index.php">
                 <i class="bi bi-bank me-2"></i>Cooperative AR System
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -44,13 +47,13 @@ if (!$is_logged_in && basename($_SERVER['PHP_SELF']) != 'login.php') {
                     <?php if ($is_logged_in): ?>
                         <?php if ($is_admin): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="../admin/index.php">
+                                <a class="nav-link" href="<?php echo $base_url; ?>/admin/index.php">
                                     <i class="bi bi-speedometer2 me-1"></i>Admin Dashboard
                                 </a>
                             </li>
                         <?php elseif ($is_member): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="../member/index.php">
+                                <a class="nav-link" href="<?php echo $base_url; ?>/member/index.php">
                                     <i class="bi bi-person-circle me-1"></i>Member Dashboard
                                 </a>
                             </li>
@@ -61,11 +64,11 @@ if (!$is_logged_in && basename($_SERVER['PHP_SELF']) != 'login.php') {
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <?php if ($is_member): ?>
-                                    <li><a class="dropdown-item" href="../member/profile.php">My Profile</a></li>
-                                    <li><a class="dropdown-item" href="../member/transactions.php">My Transactions</a></li>
+                                    <li><a class="dropdown-item" href="<?php echo $base_url; ?>/member/profile.php">My Profile</a></li>
+                                    <li><a class="dropdown-item" href="<?php echo $base_url; ?>/member/transactions.php">My Transactions</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                 <?php endif; ?>
-                                <li><a class="dropdown-item" href="../auth/logout.php">Logout</a></li>
+                                <li><a class="dropdown-item" href="<?php echo $base_url; ?>/auth/logout.php">Logout</a></li>
                             </ul>
                         </li>
                     <?php endif; ?>
